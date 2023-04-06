@@ -1,4 +1,5 @@
 import pandas as pd
+from io import StringIO
 
 class Manager:
     def __init__(self) -> None:
@@ -10,15 +11,21 @@ class Manager:
     def init_db(self, listofcolumns = []):
         self.db = pd.DataFrame([], columns=listofcolumns)
 
-    def create_db(self, listofcsvpaths : list):
+    def create_db(self, csvtype : list | str):
         li = []
         module = []
-        for file in listofcsvpaths:
-            dbp = pd.read_csv(file, index_col=None, header=0)
-            dbp["LSH_module"] = file
-            module.append(file)
-            li.append(dbp)
-        db = pd.concat(li, axis=0, ignore_index=True)
+        if type(csvtype) == list:
+            for file in csvtype:
+                dbp = pd.read_csv(file, index_col=None, header=0)
+                dbp["LSH_module"] = file
+                module.append(file)
+                li.append(dbp)
+            db = pd.concat(li, axis=0, ignore_index=True)
+        elif type(csvtype) == str:
+            csvStringIO = StringIO(csvtype)
+            db = pd.read_csv(csvStringIO, index_col=None, header=0)
+            db["LSH_module"] = "StringImport"
+            module.append("StringImport")
         self.module = module
         self.db = db
 
@@ -44,6 +51,9 @@ class Manager:
     def define_scope(self, listofscopefields : list):
         self.db['text'] = self.db[listofscopefields].astype(str).agg(' '.join, axis=1)
         self.listofscopefield = listofscopefields
+
+    def save_model_as_csv(self):
+        return self.db.to_csv()
 
     def validate_db(self):
         label = "Start checking the database"
@@ -73,7 +83,7 @@ class Manager:
 
 h = Manager()
 h.init_db()
-h.create_db(["Base/a.csv", "Base/b.csv"])
+h.create_db("ID,Name\n 1,ABC")
 h.append_modules_to_db(["Base/c.csv"])
 h.print_db()
 h.define_scope(["ID", "Name"])
