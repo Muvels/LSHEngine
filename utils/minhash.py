@@ -2,7 +2,7 @@ import random, copy, struct
 import warnings
 import numpy as np
 
-from hashfunc import sha1_hash32
+from .hashfunc import sha1_hash32
 
 # The size of a hash value in number of bytes
 hashvalue_byte_size = len(bytes(np.int64(42).data))
