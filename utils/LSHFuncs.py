@@ -1,7 +1,8 @@
 import time
-from lshforest import MinHashLSHForest
-from minhash import MinHash
-from preprocess import preprocess
+from .lshforest import MinHashLSHForest
+from .minhash import MinHash
+from .preprocess import preprocess
+import numpy as np
 
 def get_forest(data, perms):
     start_time = time.time()
@@ -38,7 +39,7 @@ def predict(text, database, perms, num_results, forest):
     if len(idx_array) == 0:
         return None # if your query is empty, return none
     
-    result = database.iloc[idx_array]['title']
+    result = database.iloc[idx_array]['text']
     
     print('It took %s seconds to query forest.' %(time.time()-start_time))
     
