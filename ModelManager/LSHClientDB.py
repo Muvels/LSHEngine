@@ -146,13 +146,3 @@ class Manager:
         Prints the current Database.
         """
         print(self.db)
-
-h = Manager()
-h.init_db()
-h.create_db("ID,Name\n 1,ABC")
-h.append_modules_to_db(["Base/c.csv"])
-h.print_db()
-h.define_scope(["ID", "Name"])
-print(h.listofscopefield)
-h.print_db()
-h.validate_db()
