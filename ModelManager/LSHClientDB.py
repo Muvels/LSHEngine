@@ -86,7 +86,7 @@ class Manager:
         Sets the search scope in which LSH (Locality-Sensitive Hashing) is executed.
 
         Args:
-            listofscopefields (list): A list of the fields that shall be queried during LSH execution
+            listofscopefields (list): A list of the fields that shall be queried during LSH execution (The Fields must be in the Database).
         """
         self.db['text'] = self.db[listofscopefields].astype(str).agg(' '.join, axis=1)
         self.listofscopefield = listofscopefields
@@ -119,8 +119,8 @@ class Manager:
         Validates the current database for the requirements of an LSH execution, but with Interface.
 
         Raises:
-            BrokenPipeError: No search area has been defined for the LSH request
-            BrokenPipeError: No search area has been defined for the LSH request
+            BrokenPipeError: No search area has been defined for the LSH request.
+            BrokenPipeError: No search area has been defined for the LSH request.
         """
         label = "Start checking the database"
         currlen = ['=' for x in range(len(label))]
