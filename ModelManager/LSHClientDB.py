@@ -2,6 +2,9 @@ import pandas as pd
 from io import StringIO
 
 class Manager:
+    """
+    Manages LSH Database.
+    """
     def __init__(self) -> None:
         db = pd.DataFrame([], columns=[])
         module = []
