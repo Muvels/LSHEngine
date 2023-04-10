@@ -59,22 +59,3 @@ class Engine:
     
     def is_model_loaded(self):
         return self.ismodelloaded
-
-
-
-b = DB_Client.Manager()
-b.init_db()
-b.create_db(["unittests/a.csv", "unittests/b.csv"])
-b.define_scope(["ID","Name"])
-
-h = Engine()
-h.GO()
-h.include_custom_manager(b)
-h.save_model_to_bin("abc.bin")
-#h.load("abc.bin")
-#h.define_current_scope(["ID", "Name"])
-h.printcurrentmodel()
-h.train_forest()
-query = h.recommendations("2")
-print(query)
-
