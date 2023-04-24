@@ -1,7 +1,7 @@
-import utils
-from utils import LSHFuncs
-from utils.huffman import huffman as bin_codec
-from ModelManager import LSHClientDB as DB_Client
+from LSHEngine import utils
+from LSHEngine.utils import LSHFuncs
+from LSHEngine.utils.huffman import huffman as bin_codec
+from LSHEngine.ModelManager import LSHClientDB as DB_Client
 class Engine:
     def __init__(self) -> None:
         storage = ''
@@ -22,7 +22,7 @@ class Engine:
         self.forest = trained
         return trained
     
-    def recommendations(self, text, num_recommendations = None, as_df: bool = True):
+    def recommendations(self, text, num_recommendations = None, as_df: bool = False):
         if num_recommendations != None:
             recommendations = utils.LSHFuncs.predict(text, self.model.db, self.perms, num_recommendations, self.forest)
         else:
