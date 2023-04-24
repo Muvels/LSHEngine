@@ -39,8 +39,16 @@ def predict(text, database, perms, num_results, forest):
     if len(idx_array) == 0:
         return None # if your query is empty, return none
     
-    result = database.iloc[idx_array]['text']
-    
+    result = database.iloc[idx_array]
+
+    jaccardval = []
+    for r in range(len(idx_array)):
+        n = MinHash(num_perm=perms)
+        tokens = preprocess(result.iloc[r]["text"])
+        for s in tokens:
+            n.update(s.encode('utf8'))
+        jaccardval.append(m.jaccard(n))
+    result["jaccard_value"] = jaccardval
     print('It took %s seconds to query forest.' %(time.time()-start_time))
     
     return result
